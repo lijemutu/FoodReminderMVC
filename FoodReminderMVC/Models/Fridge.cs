@@ -6,7 +6,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 namespace FoodReminderMVC.Models
 {
-    public class Shelf
+    public class Fridge
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
@@ -18,7 +18,9 @@ namespace FoodReminderMVC.Models
         [BsonElement("Name")]
         public string Name { get; set; }
 
+        [BsonElement("Products")]
         public Product[] Products{ get; set; }
+
 
         
     }
