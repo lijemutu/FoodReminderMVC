@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿#nullable enable
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -17,10 +18,15 @@ namespace FoodReminderMVC.Controllers
             _fridgeService = fridgeService;
         }
         // GET: FridgeController
-        public List<Fridge> Index()
+        public ActionResult<List<Fridge>> Index()
         {
-            var fridgesShow = _fridgeService.Get();
-            return fridgesShow;
+            return _fridgeService.Get();
+        }
+
+        // GET: Fridge/id
+        public ActionResult<Fridge> GetOne(string id)
+        {
+            return _fridgeService.Get(id);
         }
 
         // GET: FridgeController/Details/5
@@ -42,7 +48,7 @@ namespace FoodReminderMVC.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Fridge));
             }
             catch
             {
@@ -50,10 +56,19 @@ namespace FoodReminderMVC.Controllers
             }
         }
 
-        // GET: FridgeController/Edit/5
-        public ActionResult Edit(int id)
+        // PUT: FridgeController/Update/id                                            
+        //[HttpPut("{id}")]
+        [HttpPut]
+
+        public ActionResult<Fridge> Update(string id, [FromBody] Fridge fridgeIn)
+
+
         {
-            return View();
+            _fridgeService.Update(id, fridgeIn);
+            return _fridgeService.Get(id);
+
+
+
         }
 
         // POST: FridgeController/Edit/5
@@ -63,7 +78,7 @@ namespace FoodReminderMVC.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Fridge));
             }
             catch
             {
@@ -84,7 +99,7 @@ namespace FoodReminderMVC.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Fridge));
             }
             catch
             {
