@@ -23,7 +23,7 @@ namespace FoodReminderMVC.Controllers
             return _fridgeService.Get();
         }
 
-        // GET: Fridge/id
+        // GET: FridgeController/id
         public ActionResult<Fridge> GetOne(string id)
         {
             return _fridgeService.Get(id);
@@ -43,32 +43,19 @@ namespace FoodReminderMVC.Controllers
 
         // POST: FridgeController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        //[ValidateAntiForgeryToken]
+        public ActionResult<Fridge> Create([FromBody]Fridge fridge)
         {
-            try
-            {
-                return RedirectToAction(nameof(Fridge));
-            }
-            catch
-            {
-                return View();
-            }
+            Fridge fridgeAdded = _fridgeService.Create(fridge);
+            return fridgeAdded;
         }
 
         // PUT: FridgeController/Update/id                                            
-        //[HttpPut("{id}")]
         [HttpPut]
-
         public ActionResult<Fridge> Update(string id, [FromBody] Fridge fridgeIn)
-
-
         {
             _fridgeService.Update(id, fridgeIn);
             return _fridgeService.Get(id);
-
-
-
         }
 
         // POST: FridgeController/Edit/5
