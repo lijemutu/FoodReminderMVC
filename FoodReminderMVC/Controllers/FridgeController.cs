@@ -74,9 +74,10 @@ namespace FoodReminderMVC.Controllers
         }
 
         // GET: FridgeController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult<string> Delete(string id)
         {
-            return View();
+            _fridgeService.Remove(id);
+            return $"Id removed: {id}";
         }
 
         // POST: FridgeController/Delete/5
