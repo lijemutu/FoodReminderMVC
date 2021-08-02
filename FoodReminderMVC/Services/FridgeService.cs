@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FoodReminderMVC.Models;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace FoodReminderMVC.Services
@@ -17,13 +18,14 @@ namespace FoodReminderMVC.Services
             var database = client.GetDatabase(settings.DatabaseName);
 
             _fridges = database.GetCollection<Fridge>(settings.FridgeCollectionName);
+
         }
 
         public List<Fridge> Get() =>
             _fridges.Find(fridge => true).ToList();
 
         public Fridge Get(string id) =>
-            _fridges.Find<Fridge>(fridge => fridge.Id == id).FirstOrDefault();
+            _fridges.Find<Fridge>(fridge => fridge.Id == (id)).FirstOrDefault();
 
         public Fridge Create(Fridge fridge)
         {
@@ -31,13 +33,23 @@ namespace FoodReminderMVC.Services
             return fridge;
         }
 
+        
         public void Update(string id, Fridge fridgeIn) =>
-            _fridges.ReplaceOne(fridge => fridge.Id == id, fridgeIn);
+            _fridges.ReplaceOne(fridge => fridge.Id == (id), fridgeIn);
 
         public void Remove(Fridge fridgeIn) =>
             _fridges.DeleteOne(fridge => fridge.Id == fridgeIn.Id);
 
         public void Remove(string id) =>
-            _fridges.DeleteOne(fridge => fridge.Id == id);
+            _fridges.DeleteOne(fridge => fridge.Id == (id));
+
+        public void PushToProducts(string id, Product product)
+        {
+            var filter = Builders<Fridge>.Filter.Where(e => e.Id== (id) );
+            var update = Builders<Fridge>.Update.Push(e => e.Products, product);
+            _fridges.FindOneAndUpdate(filter, update);
+            
+        }
+            
     }
 }

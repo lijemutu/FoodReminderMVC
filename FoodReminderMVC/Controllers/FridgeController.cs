@@ -29,17 +29,6 @@ namespace FoodReminderMVC.Controllers
             return _fridgeService.Get(id);
         }
 
-        // GET: FridgeController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: FridgeController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
 
         // POST: FridgeController/Create
         [HttpPost]
@@ -58,20 +47,7 @@ namespace FoodReminderMVC.Controllers
             return _fridgeService.Get(id);
         }
 
-        // POST: FridgeController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Fridge));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+
 
         // GET: FridgeController/Delete/5
         public ActionResult<string> Delete(string id)
@@ -79,20 +55,14 @@ namespace FoodReminderMVC.Controllers
             _fridgeService.Remove(id);
             return $"Id removed: {id}";
         }
+        [HttpPut]
+        public ActionResult<Fridge> InsertProduct(string id,[FromBody] Product product)
 
-        // POST: FridgeController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
         {
-            try
-            {
-                return RedirectToAction(nameof(Fridge));
-            }
-            catch
-            {
-                return View();
-            }
+            product.AddedDate = DateTime.Now;
+            _fridgeService.PushToProducts(id,product);
+            return _fridgeService.Get(id);
+
         }
     }
 }
