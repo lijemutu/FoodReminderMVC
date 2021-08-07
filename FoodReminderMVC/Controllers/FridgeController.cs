@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FoodReminderMVC.Models;
 using FoodReminderMVC.Services;
+using MongoDB.Bson;
 
 namespace FoodReminderMVC.Controllers
 {
@@ -55,14 +56,45 @@ namespace FoodReminderMVC.Controllers
             _fridgeService.Remove(id);
             return $"Id removed: {id}";
         }
+
+
+
+        //PRODUCT SECTION
+
+
+
         [HttpPut]
         public ActionResult<Fridge> InsertProduct(string id,[FromBody] Product product)
 
         {
             product.AddedDate = DateTime.Now;
+            product.Id = ObjectId.GenerateNewId().ToString();
+            product.AddExpirationDate();
+
+
             _fridgeService.PushToProducts(id,product);
             return _fridgeService.Get(id);
 
         }
+
+        [HttpPut]
+        public ActionResult<Fridge> UpdateProduct(string idFridge,string idProduct, [FromBody] Product product)
+
+        {
+            product.AddedDate = DateTime.Now;
+            product.Id = ObjectId.GenerateNewId().ToString();
+            product.AddExpirationDate();
+
+            _fridgeService.UpdateToProducts(idFridge,idProduct, product);
+            return _fridgeService.Get(idFridge);
+
+        }
+        [HttpGet]
+        public ActionResult<Fridge> DeleteProduct(string idFridge, string idProduct)
+        {
+            _fridgeService.DeleteProduct(idFridge, idProduct);
+            return _fridgeService.Get(idFridge);
+        }
+
     }
 }

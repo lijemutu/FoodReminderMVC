@@ -43,13 +43,33 @@ namespace FoodReminderMVC.Services
         public void Remove(string id) =>
             _fridges.DeleteOne(fridge => fridge.Id == (id));
 
-        public void PushToProducts(string id, Product product)
+        public void PushToProducts(string idFridge, Product product)
         {
-            var filter = Builders<Fridge>.Filter.Where(e => e.Id== (id) );
+            var filter = Builders<Fridge>.Filter.Where(e => e.Id== (idFridge) );
             var update = Builders<Fridge>.Update.Push(e => e.Products, product);
             _fridges.FindOneAndUpdate(filter, update);
             
         }
-            
+
+        public void UpdateToProducts(string idFridge, string idProduct, Product product)
+        {
+            var filter = Builders<Fridge>.Filter;
+            var filterFridgeProduct = filter.And(filter.Where(e => e.Id == (idFridge)),
+                filter.ElemMatch(e =>e.Products,p => p.Id == (idProduct)));
+
+            var update = Builders<Fridge>.Update.Set("Products.$",product);
+            _fridges.UpdateOne(filterFridgeProduct, update);
+
+        }
+
+        public void DeleteProduct(string idFridge, string idProduct)
+        {
+            var filter = Builders<Fridge>.Filter.Where(e => e.Id == (idFridge));
+
+            var update = Builders<Fridge>.Update.PullFilter(fridge =>fridge.Products,Builders<Product>.Filter.Eq(x=>x.Id,idProduct));
+            _fridges.UpdateOne(filter, update);
+
+        }
+
     }
 }

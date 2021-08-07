@@ -17,11 +17,21 @@ namespace FoodReminderMVC.Models
         [BsonElement("Category")]
         public string Category { get; set; }
         [BsonElement("AddedDate")]
-        public DateTime? AddedDate { get; set; }
+        public DateTime AddedDate { get; set; }
         [BsonElement("ExpirationDate")]
-        public DateTime? ExpirationDate { get; set; }
+        public DateTime ExpirationDate { get; set; }
         [BsonElement("ProductListId")]
         public int? ProductListId { get; set; }
 
+
+
+        public void AddExpirationDate()
+        {
+            this.ExpirationDate = this.AddedDate.AddDays(14);
+        }
+        public void AddExpirationDate(DateTime expirationDateTime)
+        {
+            this.ExpirationDate = expirationDateTime;
+        }
     }
 }
