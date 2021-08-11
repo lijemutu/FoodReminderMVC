@@ -1,5 +1,27 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@model FoodReminderMVC.ViewModels.FridgesViewModel
 @{
 }
+
+<h1>Fridges Available</h1>      
+
+<div class="d-md-flex flex-md-equal w-100 my-md-3 ps-md-3">
+    @foreach(var fridge in Model.Fridges)
+    {
+    <div class="bg-dark me-md-3 pt-3 px-3 pt-md-5 px-md-5 text-center text-white overflow-hidden">
+        <h2>Fridge name: @fridge.Name</h2>
+        <p>Capacity: @fridge.Capacity</p>
+        @foreach (var product in fridge.Products)
+        {
+            <p>Name: @product.Name</p>
+            <p>Added date: @product.AddedDate</p>
+            <p>Expiration date: @product.ExpirationDate</p>
+
+
+        }
+    </div>
+        
+    }
+</div>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FoodReminderMVC.Models;
 using FoodReminderMVC.Services;
+using FoodReminderMVC.ViewModels;
 using MongoDB.Bson;
 
 namespace FoodReminderMVC.Controllers
@@ -19,9 +20,18 @@ namespace FoodReminderMVC.Controllers
             _fridgeService = fridgeService;
         }
         // GET: FridgeController
-        public ActionResult<List<Fridge>> Index()
+        //public ActionResult<List<Fridge>> Index()
+        public IActionResult Index()
+
         {
-            return _fridgeService.Get();
+            var fridges = _fridgeService.Get();
+            var fridgesView = new FridgesViewModel()
+            {
+                Fridges = fridges
+            };
+
+            return View(fridgesView);
+
         }
 
         // GET: FridgeController/id
