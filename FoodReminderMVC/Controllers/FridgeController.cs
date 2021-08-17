@@ -19,6 +19,9 @@ namespace FoodReminderMVC.Controllers
         {
             _fridgeService = fridgeService;
         }
+
+        // VIEW CONTROLLERS
+
         // GET: FridgeController
         //public ActionResult<List<Fridge>> Index()
         public IActionResult Index()
@@ -34,11 +37,31 @@ namespace FoodReminderMVC.Controllers
 
         }
 
-        // GET: FridgeController/id
-        public ActionResult<Fridge> GetOne(string id)
+        // GET: FridgeController/Edit/id
+        [HttpGet]
+        public IActionResult Edit(string id)
         {
-            return _fridgeService.Get(id);
+            var fridge = _fridgeService.Get(id);
+            var fridgeView = new FridgeViewModel()
+            {
+                capacity = fridge.Capacity,
+                id = fridge.Id,
+                name = fridge.Name,
+                Products = fridge.Products
+
+            };
+            return View(fridgeView);
         }
+
+
+
+        // NON VIEW CONTROLLERS
+
+        // GET: FridgeController/id
+        //public ActionResult<Fridge> GetOne(string id)
+        //{
+        //    return _fridgeService.Get(id);
+        //}
 
 
         // POST: FridgeController/Create
@@ -99,7 +122,7 @@ namespace FoodReminderMVC.Controllers
             return _fridgeService.Get(idFridge);
 
         }
-        [HttpGet]
+        //[HttpGet]
         public ActionResult<Fridge> DeleteProduct(string idFridge, string idProduct)
         {
             _fridgeService.DeleteProduct(idFridge, idProduct);
