@@ -3,19 +3,22 @@
 *@
 @model FoodReminderMVC.ViewModels.FridgesViewModel
 @{
+    
 }
 
 <h1 class="text-center">Fridges Available</h1>      
-<div class="container">
-    <div class="">
+<div class="container p-3 m-2" >
+    <div class="row" align="center">
         @foreach (var fridge in Model.Fridges)
         {
-            <div class="">
+            <div class="card shadow p-2 m-2 col-md-4  col-xs-12" align="center">
+                <img width="350" height="250" src="static/refrigerator.svg"/>
+                <div class="card-body text-center">
                 <h2>Fridge name: @fridge.Name</h2>
                 <p>Capacity: @fridge.Capacity</p>
-                
-                <h4>Items: </h4>
-                @foreach (var product in fridge.Products)
+
+                <h4> Number of items: @fridge.Products.Length</h4>      
+                    @*@foreach (var product in fridge.Products)
                 {
                     <hr class="dropdown-divider"/>
                     <p>Product Name: @product.Name</p>
@@ -23,7 +26,11 @@
                     <p>Expiration date: @product.ExpirationDate</p>
 
 
-                }
+                }*@
+                    <a class="btn btn-primary" role="button" href="Fridge/Edit/@fridge.Id">View</a>
+                    <a class="btn btn-secondary" role="button" href="">Modify</a>
+                    <a class="btn btn-danger" role="button" href="">Delete</a>
+                </div>
             </div>
 
         }

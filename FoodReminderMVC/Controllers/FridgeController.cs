@@ -44,9 +44,9 @@ namespace FoodReminderMVC.Controllers
             var fridge = _fridgeService.Get(id);
             var fridgeView = new FridgeViewModel()
             {
-                capacity = fridge.Capacity,
-                id = fridge.Id,
-                name = fridge.Name,
+                Capacity = fridge.Capacity,
+                Id = fridge.Id,
+                Name = fridge.Name,
                 Products = fridge.Products
 
             };

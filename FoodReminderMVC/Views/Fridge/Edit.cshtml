@@ -4,28 +4,38 @@
 @model FoodReminderMVC.ViewModels.FridgeViewModel
 @{
 }
+<div class="container shadow m-2 p-2">
+    <div class=" text-center">
+        <h1 class="">@Model.Name' fridge</h1>
+        <p>Max capacity: @Model.Capacity</p>
+        <p>Total items: @Model.Products.Length</p>
 
-<h1 class="text-center">Fridges Available</h1>
-<div class="container">
-    <div class="">
-        
-        
-            <div class="">
-                <h2>Fridge name: @Model.name</h2>
-                <p>Capacity: @Model.capacity</p>
+    </div>
+    <hr class="dropdown-divider" />
+    
+    <div>
+        <div class="row" >
+            <div class="d-sm-none  d-none  d-md-none d-lg-block col-4 " align="center">
+                <img width="350" height="250" class="" src="/static/refrigerator.svg"/>
+            </div>
+    
+            <div class="col-lg-8 col-md-12 col-xs-12 col-sm-12" >
 
-                <h4>Items: </h4>
                 @foreach (var product in Model.Products)
                 {
-                    <hr class="dropdown-divider" />
-                    <p>Product Name: @product.Name</p>
-                    <p>Added date: @product.AddedDate</p>
-                    <p>Expiration date: @product.ExpirationDate</p>
-
-
+                    <div class="col-md-4 col-xs-12 col-sm-12 d-inline-block">
+                        <div class="card shadow m-2 p-2 text-center">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">Added date: @product.AddedDate.ToShortDateString()</p>
+                            <p class="card-text">Expiration date: @product.ExpirationDate.ToShortDateString()</p>
+                            <div class="d-inline-block">
+                            <a class="btn btn-secondary" role="button" href="">Modify</a>
+                            <a class="btn btn-danger" role="button" href="">Delete</a>
+                            </div>
+                        </div>
+                    </div>
                 }
             </div>
-
-        
+        </div>
     </div>
 </div>

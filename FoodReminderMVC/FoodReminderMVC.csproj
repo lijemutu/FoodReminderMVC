@@ -5,7 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.BrowserLink" Version="2.2.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.13.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\static\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\static\refrigerator.svg" />
   </ItemGroup>
 
 </Project>
