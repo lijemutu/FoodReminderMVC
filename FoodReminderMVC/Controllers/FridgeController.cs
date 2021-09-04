@@ -24,6 +24,7 @@ namespace FoodReminderMVC.Controllers
 
         // GET: FridgeController
         //public ActionResult<List<Fridge>> Index()
+        [HttpGet]
         public IActionResult Index()
 
         {
@@ -37,7 +38,7 @@ namespace FoodReminderMVC.Controllers
 
         }
 
-        // GET: FridgeController/Edit/id
+        // GET: FridgeController/Edit/{id}
         [HttpGet]
         public IActionResult Edit(string id)
         {
@@ -54,6 +55,14 @@ namespace FoodReminderMVC.Controllers
         }
 
 
+        // GET: FridgeController/Create/
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+
 
         // NON VIEW CONTROLLERS
 
@@ -67,10 +76,11 @@ namespace FoodReminderMVC.Controllers
         // POST: FridgeController/Create
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult<Fridge> Create([FromBody]Fridge fridge)
+        public ActionResult<Fridge> Create([FromForm] string fridgeName, [FromForm] int fridgeCapacity)
         {
+            var fridge = new Fridge() {Capacity = fridgeCapacity, Name = fridgeName };
             Fridge fridgeAdded = _fridgeService.Create(fridge);
-            return fridgeAdded;
+            return RedirectToAction("Index");
         }
 
         // PUT: FridgeController/Update/id                                            
@@ -84,10 +94,11 @@ namespace FoodReminderMVC.Controllers
 
 
         // GET: FridgeController/Delete/5
-        public ActionResult<string> Delete(string id)
+        [HttpPost]
+        public IActionResult Delete(string id)
         {
             _fridgeService.Remove(id);
-            return $"Id removed: {id}";
+            return RedirectToAction("Index");
         }
 
 

@@ -5,34 +5,74 @@
 @{
     
 }
+<div class="container">
+    <div>
+        <div class="d-flex justify-content-center">
+            <h1 class="text-center ">Fridges Available</h1>
+        </div>
 
-<h1 class="text-center">Fridges Available</h1>      
-<div class="container p-3 m-2" >
-    <div class="row" align="center">
+        <div class="d-flex justify-content-end">
+            <a class="btn btn-success " role="button" href="Fridge/Create">Create Fridge</a>
+        </div>
+    </div>
+    <br/>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-3">
+
         @foreach (var fridge in Model.Fridges)
         {
-            <div class="card shadow p-2 m-2 col-md-4  col-xs-12" align="center">
-                <img width="350" height="250" src="static/refrigerator.svg"/>
-                <div class="card-body text-center">
-                <h2>Fridge name: @fridge.Name</h2>
-                <p>Capacity: @fridge.Capacity</p>
-
-                <h4> Number of items: @fridge.Products.Length</h4>      
-                    @*@foreach (var product in fridge.Products)
-                {
-                    <hr class="dropdown-divider"/>
-                    <p>Product Name: @product.Name</p>
-                    <p>Added date: @product.AddedDate</p>
-                    <p>Expiration date: @product.ExpirationDate</p>
+            @*<div class="card shadow p-1 m-1 col-12 col-md-6 col-lg-4">*@
+            <div class="col">
+                <div class="card shadow">
 
 
-                }*@
-                    <a class="btn btn-primary" role="button" href="Fridge/Edit/@fridge.Id">View</a>
-                    <a class="btn btn-secondary" role="button" href="">Modify</a>
-                    <a class="btn btn-danger" role="button" href="">Delete</a>
+                    <div class="embed-responsive mx-auto text-center">
+                        <img class="" src="static/refrigerator.svg"/>
+                    </div>
+                    <div class="card-body text-center">
+                        <h2>Fridge name: @fridge.Name</h2>
+                        <p>Capacity: @fridge.Capacity</p>
+                        @if (@fridge.Products != null)
+                        {
+                            <h4> Number of items: @fridge.Products.Length</h4>
+
+                        }
+                        @*@foreach (var product in fridge.Products)
+                            {
+                                <hr class="dropdown-divider"/>
+                                <p>Product Name: @product.Name</p>
+                                <p>Added date: @product.AddedDate</p>
+                                <p>Expiration date: @product.ExpirationDate</p>
+
+
+                            }*@
+                        <a class="btn btn-primary" role="button" asp-action="Edit" asp-route-id="@fridge.Id">View</a>
+                        <a class="btn btn-secondary" role="button" href="">Modify</a>
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteConfirmationModal_@fridge.Name">Delete</button>
+                        
+                        
+                        <!-- Modal -->
+                        <div class="modal fade" id="DeleteConfirmationModal_@fridge.Name" tabindex="-1" aria-labelledby="DeleteConfirmationModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="DeleteConfirmationModalLabel">Delete Confirm?</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Do you want to delete @fridge.Name fridge ?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <form asp-action="Delete" asp-route-id="@fridge.Id" class="" data-bs-toggle="modal" data-bs-target="#DeleteConfirmationModal" id="" method="POST">
+                                            <input type="submit" class="btn btn-danger" value="Delete"><br>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-
         }
     </div>
 </div>
