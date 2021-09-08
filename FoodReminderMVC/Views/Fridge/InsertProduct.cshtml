@@ -1,0 +1,36 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model FoodReminderMVC.Models.Product
+@{
+}
+
+<div class="container shadow m-2 p-2">
+    <div class=" text-center">
+        <h1 class="">Add Product</h1>
+
+    </div>
+    <hr class="dropdown-divider" />
+
+    <div>
+        <div class="row">
+            <div class="d-sm-none  d-none  d-md-none d-lg-block col-4 " align="center">
+                <img width="350" height="250" class="" src="/static/refrigerator.svg" />
+            </div>
+
+            <div class="col-lg-8 col-md-12 col-xs-12 col-sm-12">
+
+                <div class="">
+                    <form asp-action="InsertProduct" asp-route-id="@Url.ActionContext.RouteData.Values["id"]" class="bordered simple-form" id="" method="POST">
+                        <label asp-for="Name">Name: </label>
+                        <input asp-for="Name" name="productName" id="productName" ><br>
+                        <label asp-for="ExpirationDate">Expiration date: </label>
+                        <input asp-for="ExpirationDate" name="productExpirationDate" id="productExpirationDate" value="@DateTime.Now.AddDays(14)"><br>
+                        <input type="submit" value="Submit"><br>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

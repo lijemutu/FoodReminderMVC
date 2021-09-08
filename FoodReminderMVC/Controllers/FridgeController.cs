@@ -62,7 +62,28 @@ namespace FoodReminderMVC.Controllers
             return View();
         }
 
+        [HttpGet]
+        public IActionResult Update(string Id)
+        {
+            var fridge = _fridgeService.Get(Id);
+            var fridgeView = new FridgeViewModel()
+            {
+                Capacity = fridge.Capacity,
+                Id = fridge.Id,
+                Name = fridge.Name,
+                Products = fridge.Products
 
+            };
+            return View(fridgeView);
+        }
+
+        [HttpGet]
+        public IActionResult InsertProduct()
+
+        {
+            return View();
+
+        }
 
         // NON VIEW CONTROLLERS
 
@@ -84,11 +105,19 @@ namespace FoodReminderMVC.Controllers
         }
 
         // PUT: FridgeController/Update/id                                            
-        [HttpPut]
-        public ActionResult<Fridge> Update(string id, [FromBody] Fridge fridgeIn)
+        [HttpPost]
+        public ActionResult<Fridge> Update(string id, [FromForm] string fridgeName,[FromForm] int fridgeCapacity)
         {
+            var fridge = _fridgeService.Get(id);
+            var fridgeIn = new Fridge()
+            {
+                Id = id,
+                Capacity = fridgeCapacity,
+                Name = fridgeName,
+                Products = fridge.Products
+            };
             _fridgeService.Update(id, fridgeIn);
-            return _fridgeService.Get(id);
+            return RedirectToAction("Index");
         }
 
 
@@ -107,20 +136,27 @@ namespace FoodReminderMVC.Controllers
 
 
 
-        [HttpPut]
-        public ActionResult<Fridge> InsertProduct(string id,[FromBody] Product product)
+        [HttpPost]
+        public ActionResult<Fridge> InsertProduct(string id, [FromForm] string productName, [FromForm] DateTime productExpirationDate)
 
         {
-            product.AddedDate = DateTime.Now;
-            product.Id = ObjectId.GenerateNewId().ToString();
-            product.AddExpirationDate();
-
-
+            if(productExpirationDate == DateTime.MinValue)
+            {
+                productExpirationDate = DateTime.Now.AddDays(14);
+            }
+            var product = new Product()
+            {
+                Name = productName,
+                AddedDate = DateTime.Now,
+                Id = ObjectId.GenerateNewId().ToString(),
+                ExpirationDate = productExpirationDate
+            };
+            
+            
             _fridgeService.PushToProducts(id,product);
-            return _fridgeService.Get(id);
+            return RedirectToAction("Index");
 
         }
-
         [HttpPut]
         public ActionResult<Fridge> UpdateProduct(string idFridge,string idProduct, [FromBody] Product product)
 
@@ -133,12 +169,13 @@ namespace FoodReminderMVC.Controllers
             return _fridgeService.Get(idFridge);
 
         }
-        //[HttpGet]
-        public ActionResult<Fridge> DeleteProduct(string idFridge, string idProduct)
+        [HttpPost]
+        public IActionResult DeleteProduct(string idFridge, string idProduct)
         {
             _fridgeService.DeleteProduct(idFridge, idProduct);
-            return _fridgeService.Get(idFridge);
+            return RedirectToAction("Index");
         }
+
 
     }
 }

@@ -1,13 +1,13 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@model FoodReminderMVC.Models.Fridge
+@model FoodReminderMVC.ViewModels.FridgeViewModel
 @{
 }
 
 <div class="container shadow m-2 p-2">
     <div class=" text-center">
-        <h1 class="">Create Fridge</h1>
+        <h1 class="">Modify Fridge</h1>
 
     </div>
     <hr class="dropdown-divider" />
@@ -21,11 +21,11 @@
             <div class="col-lg-8 col-md-12 col-xs-12 col-sm-12" >
 
                 <div class="">
-                    <form asp-action="Create" class="bordered simple-form" id="" method="POST">
+                    <form asp-action="Update" class="bordered simple-form" id="" method="POST">
                         <label asp-for="Name">Name: </label>
-                        <input asp-for="Name" name="fridgeName" id="fridgeName"><br>
+                        <input asp-for="Name" name="fridgeName" id="fridgeName" value="@Model.Name"><br>
                         <label asp-for="Capacity">Capacity: </label>
-                        <input asp-for="Capacity" name="fridgeCapacity" id="fridgeCapacity"><br>
+                        <input asp-for="Capacity" name="fridgeCapacity" id="fridgeCapacity" value="@Model.Capacity"><br>
                         <input type="submit" value="Submit"><br>
                     </form>
                     

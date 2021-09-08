@@ -11,7 +11,7 @@ namespace FoodReminderMVC.ViewModels
         public string Id { get; set; }
         public int Capacity { get; set; }
         public string Name { get; set; }
-        public Product[] Products { get; set; }
+        public List<Product> Products { get; set; } = new List<Product>();
     }
 
     public class FridgesViewModel

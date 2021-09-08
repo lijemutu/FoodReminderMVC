@@ -4,38 +4,48 @@
 @model FoodReminderMVC.ViewModels.FridgeViewModel
 @{
 }
-<div class="container shadow m-2 p-2">
+<div class="container shadow">
     <div class=" text-center">
         <h1 class="">@Model.Name' fridge</h1>
         <p>Max capacity: @Model.Capacity</p>
-        <p>Total items: @Model.Products.Length</p>
-
+        @if (Model.Products != null)
+        {
+            <p>Total items: @Model.Products.Count</p>
+        }
+        </div>
+    <div class="d-flex justify-content-end">
+        <a class="btn btn-success " role="button" asp-action="InsertProduct" asp-route-id="@Model.Id">Add Product</a>
     </div>
     <hr class="dropdown-divider" />
     
-    <div>
-        <div class="row" >
-            <div class="d-sm-none  d-none  d-md-none d-lg-block col-4 " align="center">
+    <div class="row">
+        
+            <div class="d-sm-none  d-none  d-md-none d-lg-block d-inline-block col-4" align="center">
                 <img width="350" height="250" class="" src="/static/refrigerator.svg"/>
             </div>
-    
-            <div class="col-lg-8 col-md-12 col-xs-12 col-sm-12" >
-
-                @foreach (var product in Model.Products)
-                {
-                    <div class="col-md-4 col-xs-12 col-sm-12 d-inline-block">
-                        <div class="card shadow m-2 p-2 text-center">
-                            <h5 class="card-title">@product.Name</h5>
-                            <p class="card-text">Added date: @product.AddedDate.ToShortDateString()</p>
-                            <p class="card-text">Expiration date: @product.ExpirationDate.ToShortDateString()</p>
-                            <div class="d-inline-block">
-                            <a class="btn btn-secondary" role="button" href="">Modify</a>
-                            <a class="btn btn-danger" role="button" href="">Delete</a>
+            <div class="col-8 d-inline-block">
+                
+                <div class="row row-cols-lg-2">
+                    @if (Model.Products != null)
+                    {
+                        @foreach (var product in Model.Products)
+                        {
+                            <div class="col col-lg-6">
+                                <div class="card shadow m-1 p-1 text-center">
+                                    <h5 class="card-title">@product.Name</h5>
+                                    <p class="card-text">Added date: @product.AddedDate.ToShortDateString()</p>
+                                    <p class="card-text">Expiration date: @product.ExpirationDate.ToShortDateString()</p>
+                                    <div class="d-inline-block">
+                                        <a class="btn btn-secondary" role="button" href="">Modify</a>
+                                        <form asp-action="DeleteProduct" asp-route-idFridge="@Url.ActionContext.RouteData.Values["id"]" asp-route-idProduct="@product.Id" class="" data-bs-toggle="modal" data-bs-target="#DeleteConfirmationModal" id="" method="POST">
+                                            <input type="submit" class="btn btn-danger" value="Delete"><br>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                }
+                        }
+                    }
+                </div>
             </div>
-        </div>
     </div>
 </div>

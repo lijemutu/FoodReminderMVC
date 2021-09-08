@@ -19,8 +19,7 @@ namespace FoodReminderMVC.Models
         public string Name { get; set; }
 
         [BsonElement("Products")]
-        public Product[] Products{ get; set; }
-
+        public List<Product> Products { get; set; } = new List<Product>();
 
         
     }

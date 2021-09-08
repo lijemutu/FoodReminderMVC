@@ -21,11 +21,11 @@
         @foreach (var fridge in Model.Fridges)
         {
             @*<div class="card shadow p-1 m-1 col-12 col-md-6 col-lg-4">*@
-            <div class="col">
-                <div class="card shadow">
+            <div class="col col-lg-4 d-flex align-self-stretch ">
+                <div class="card shadow d-flex flex-column m-1 p-1">
 
 
-                    <div class="embed-responsive mx-auto text-center">
+                    <div class="embed-responsive mx-auto text-center m-1 p-1">
                         <img class="" src="static/refrigerator.svg"/>
                     </div>
                     <div class="card-body text-center">
@@ -33,7 +33,7 @@
                         <p>Capacity: @fridge.Capacity</p>
                         @if (@fridge.Products != null)
                         {
-                            <h4> Number of items: @fridge.Products.Length</h4>
+                            <h4> Number of items: @fridge.Products.Count</h4>
 
                         }
                         @*@foreach (var product in fridge.Products)
@@ -46,7 +46,7 @@
 
                             }*@
                         <a class="btn btn-primary" role="button" asp-action="Edit" asp-route-id="@fridge.Id">View</a>
-                        <a class="btn btn-secondary" role="button" href="">Modify</a>
+                        <a class="btn btn-secondary" role="button" asp-action="Update" asp-route-id="@fridge.Id">Modify</a>
                         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteConfirmationModal_@fridge.Name">Delete</button>
                         
                         
