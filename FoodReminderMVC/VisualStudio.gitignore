@@ -387,4 +387,4 @@ FodyWeavers.xsd
 .idea/
 *.sln.iml
 
-C:\Users\erick\source\repos\FoodReminderMVC\FoodReminderMVC\appsettings.Development.json
+appsettings.Development.json
